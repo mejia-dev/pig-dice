@@ -10,15 +10,34 @@
   <h1>Pig Dice</h1>
 
   <div id="divInfoOptions">
-    
+    <form id="gameOptions">
+      <button id="playGame">Play</button>
+    </form>
   </div>
 
+  <br><br><br>
+
   <div id="divGame">
-    
+    <p id="currentPlayerTurn">Please press "Play"</p>
+    <form id="gameButtons">
+      <button type="diceRoll" id="rollDice">Roll Dice</button>
+      <button type="hold" id="hold">Hold</button>
+    </form>
+    <p id="rolledNumberDisplay"></p>
+    <p id="turnTotalDisplay1"></p>
+    <p id="turnTotalDisplay2"></p>
+
   </div>
 
   <div id="divScores">
-
+    <div id="divScoreP1">
+      <h3>Player 1 Score</h3>
+      <p id="displayScoreP1">none</p>
+    </div>
+    <div id="divScoreP2">
+      <h3>Player 2 Score</h3>
+      <p id="displayScoreP2">none</p>
+    </div>
   </div>
 
 </body>
