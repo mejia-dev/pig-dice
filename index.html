@@ -9,15 +9,17 @@
 <body class="gray">
   <h1>Pig Dice</h1>
 
-  <div id="divInfoOptions">
+  <div id="divGameOptions">
     <form id="gameOptions">
-      <button id="playGame">Play</button>
+      <button id="playGame">Play Local Game</button>
+      <button id="playWithAi">Play Vs AI</button>
+      <button id="playWithHardAi">Play Vs Hard AI</button>
     </form>
   </div>
 
   <br><br><br>
 
-  <div id="divGame">
+  <div id="divGame" class="hidden">
     <p id="currentPlayerTurn">Please press "Play"</p>
     <form id="gameButtons">
       <button type="diceRoll" id="rollDice">Roll Dice</button>
@@ -29,7 +31,7 @@
 
   </div>
 
-  <div id="divScores">
+  <div id="divScores" class="hidden">
     <div id="divScoreP1">
       <h3>Player 1 Score</h3>
       <p id="displayScoreP1">none</p>
