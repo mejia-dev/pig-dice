@@ -4,3 +4,7 @@
 .red {
   color:rgb(116, 14, 14);
 }
+
+.hidden {
+  display:none;
+}
