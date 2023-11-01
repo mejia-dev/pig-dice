@@ -63,10 +63,7 @@ function playerTurn(playerNumber) {
       keepRolling = i-1;
       changePlayerTurn();
     }
-  gameScoreTally.scores[playerNumber].prototype.addScore(turnTotal)
-  turnTotalP1 = 0
-  
-
+  gameScoreTally.scores[playerNumber].addScore(turnTotal)
   }
 }
 
