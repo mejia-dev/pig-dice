@@ -1,5 +1,3 @@
-// let diceRoll = Math.floor(Math.random() * 6) +1;
-
 // Business Logic for ScoreTally constructor
 
 function ScoreTally() {
@@ -33,7 +31,7 @@ let turnTotal = 0;
 let aiMode = 0;
 
 
-// Business Logic
+// Global Business Logic
 function changePlayerTurn() {
   event.preventDefault();
   showGame()
@@ -42,41 +40,21 @@ function changePlayerTurn() {
   turnTotal = 0;
   if (currentTurn === 1) {
     currentTurn = 2;
-    displayCurrentPlayerTurn()
-    return
+    if (aiMode != 0) {
+      displayGameButtons(false);
+      aiTurn();
+    }
+    displayCurrentPlayerTurn();
+    return;
   } else {
     currentTurn = 1;
-    displayCurrentPlayerTurn()
-    return
+    displayGameButtons(true);
+    displayCurrentPlayerTurn();
+    return;
   }
 }
 
-function setAiMode() {
-  event.preventDefault();
-  mode = event.target.id
-  console.log(mode)
-  if (mode === "playWithHardAi") {
-    aiMode = 2;
-  } else {
-    aiMode = 1;
-  }
-  changePlayerTurn();
-  console.log(aiMode)
-}
 
-function playerTurn() {
-  event.preventDefault();
-  let diceRollTotal = rollDice(currentTurn);
-  if (diceRollTotal === "nothing") {
-    turnTotal = 0;
-    holdDice();
-    return
-  }
-  turnTotal += diceRollTotal;
-  console.log(turnTotal);
-  displayTurnTotal(turnTotal);
-      
-}
 
 function rollDice() {
   event.preventDefault();
@@ -98,17 +76,74 @@ function holdDice() {
   }
   hideTurnMessages();
   checkWinningConditions();
-  changePlayerTurn();
 }
 
 function checkWinningConditions() {
-  
   if (gameScoreTally.scores[currentTurn].currentScore >= 100 ) {
     let winMessageHolder = document.getElementById("winMessage");
     winMessageHolder.innerText = "Player " + currentTurn + " wins!";
+    displayGameButtons(false);
+  } else {
+    changePlayerTurn();
   }
 }
 
+// AI-Specific Business Logic
+
+function setAiMode() {
+  event.preventDefault();
+  mode = event.target.id
+  console.log(mode)
+  if (mode === "playWithHardAi") {
+    aiMode = 2;
+  } else {
+    aiMode = 1;
+  }
+  changePlayerTurn();
+  console.log(aiMode)
+}
+
+function aiTurn() {
+  if (aiMode === 1) {
+    let diceRollTotal = rollDice(currentTurn) 
+    if (diceRollTotal === "nothing") {
+      turnTotal = 0;
+      holdDice();
+    } else {
+      turnTotal += diceRollTotal;
+      diceRollTotal = rollDice(currentTurn)
+      if (diceRollTotal === "nothing") {
+        turnTotal = 0;
+        holdDice();
+      } else {
+        turnTotal += diceRollTotal;
+        holdDice();
+      }
+    }
+  }
+  else {
+    for (diceRollTotal = 0; diceRollTotal < 21; diceRollTotal)
+    currentRollTotal = rollDice(currentTurn);
+    if (currentRollTotal === "nothing") {
+      turnTotal = 0;
+      holdDice();
+      break;
+    }
+  }
+}
+
+function playerTurn() {
+  event.preventDefault();
+  let diceRollTotal = rollDice(currentTurn);
+  if (diceRollTotal === "nothing") {
+    turnTotal = 0;
+    holdDice();
+    return
+  }
+  turnTotal += diceRollTotal;
+  console.log(turnTotal);
+  displayTurnTotal(turnTotal);
+}
 
 // UI Logic
 
@@ -166,6 +201,15 @@ function showGame() {
   let scoresDiv = document.getElementById("divScores");
   gameDiv.removeAttribute("class");
   scoresDiv.removeAttribute("class");
+}
+
+function displayGameButtons(input) {
+  let gameButtons = document.getElementById("gameButtons");
+  if (input === true) {
+    gameButtons.removeAttribute("class");
+  } else if (input === false) {
+    gameButtons.setAttribute("class", "hidden");
+  }
 }
 
 window.addEventListener("load", function() {
