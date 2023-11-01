@@ -46,16 +46,19 @@ function playerTurn(playerNumber) {
   let keepRolling = 1;
   let turnTotal = 0;
   for(let i = 0; i < keepRolling; i++) {
-    let diceRoll = Math.floor(Math.random() * 6) +1;    
+    console.log("Number of Roll: " + i);
+    let diceRoll = Math.floor(Math.random() * 6) +1;
+    console.log("Value of Dice: " + diceRoll);
     if (diceRoll === 1) {
       keepRolling = 0;
       changePlayerTurn();
     } else if (diceRoll > 1) {
       
-  
-      //(event listener for reroll)
       turnTotal = turnTotal + diceRoll
+      //(event listener for reroll)
+      keepRolling = keepRolling + 1;
       //(event listener for hold)
+      turnTotal = turnTotal + diceRoll
       gameScoreTally.scores[playerNumber].addScore(turnTotal)
       keepRolling = i-1;
       changePlayerTurn();
