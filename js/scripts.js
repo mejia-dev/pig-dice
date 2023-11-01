@@ -39,12 +39,10 @@ function changePlayerTurn() {
   turnTotal = 0;
   if (currentTurn === 1) {
     currentTurn = 2;
-    // playerTurn();
     displayCurrentPlayerTurn()
     return
   } else {
     currentTurn = 1;
-    // playerTurn();
     displayCurrentPlayerTurn()
     return
   }
@@ -83,7 +81,16 @@ function holdDice() {
     hideRolledMessages();
   }
   hideTurnMessages();
+  checkWinningConditions();
   changePlayerTurn();
+}
+
+function checkWinningConditions() {
+  
+  if (gameScoreTally.scores[currentTurn].currentScore >= 100 ) {
+    let winMessageHolder = document.getElementById("winMessage");
+    winMessageHolder.innerText = "Player " + currentTurn + " wins!";
+  }
 }
 
 
@@ -100,6 +107,7 @@ function displayScores() {
 
 function displayRolledNumber(rolledNumber) {
   let rolledNumberDisplay = document.getElementById("rolledNumberDisplay");
+  rolledNumberDisplay.removeAttribute("class");
   rolledNumberDisplay.innerText = "You rolled a " + rolledNumber + ".";
   if (rolledNumber === 1) {
     rolledNumberDisplay.setAttribute("class", "red");
