@@ -30,11 +30,14 @@ gameScoreTally.trackScore(p1Score);
 gameScoreTally.trackScore(p2Score);
 let currentTurn = 2;
 let turnTotal = 0;
+let aiMode = 0;
 
 
 // Business Logic
 function changePlayerTurn() {
   event.preventDefault();
+  showGame()
+  hideGameOptionsDiv()
   displayScores()
   turnTotal = 0;
   if (currentTurn === 1) {
@@ -46,6 +49,12 @@ function changePlayerTurn() {
     displayCurrentPlayerTurn()
     return
   }
+}
+
+function setAiMode() {
+  event.preventDefault();
+  aiMode = mode;
+  changePlayerTurn();
 }
 
 function playerTurn() {
@@ -138,11 +147,24 @@ function displayCurrentPlayerTurn() {
   let currentTurnDisplay = document.getElementById("currentPlayerTurn");
   let turn = currentTurn;
   currentTurnDisplay.innerText = "Player " + currentTurn + "'s Turn!";
-  
+}
+
+function hideGameOptionsDiv() {
+  let gameOptionsDiv = document.getElementById("divGameOptions");
+  gameOptionsDiv.setAttribute("class","hidden");
+}
+
+function showGame() {
+  let gameDiv = document.getElementById("divGame");
+  let scoresDiv = document.getElementById("divScores");
+  gameDiv.removeAttribute("class");
+  scoresDiv.removeAttribute("class");
 }
 
 window.addEventListener("load", function() {
   this.document.getElementById("playGame").addEventListener("click",changePlayerTurn);
+  this.document.getElementById("playWithAi").addEventListener("click",setAiMode());
+  this.document.getElementById("playWithHardAi").addEventListener("click",setAiMode());
   this.document.getElementById("hold").addEventListener("click", holdDice);
   this.document.getElementById("rollDice").addEventListener("click", playerTurn);
 })
