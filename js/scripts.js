@@ -4,7 +4,7 @@ function ScoreTally() {
   this.scores = {};
 }
 
-ScoreTally.prototype.trackScore = function(playerScore) {
+ScoreTally.prototype.trackScore = function (playerScore) {
   this.scores[playerScore.playerNumber] = playerScore;
 }
 
@@ -15,15 +15,15 @@ function PlayerScore(playerNumber, currentScore) {
   this.currentScore = currentScore;
 }
 
-PlayerScore.prototype.addScore = function(input) {
+PlayerScore.prototype.addScore = function (input) {
   this.currentScore += input;
 }
 
 
 // Define Global Variables
 let gameScoreTally = new ScoreTally;
-let p1Score = new PlayerScore(1,0)
-let p2Score = new PlayerScore(2,0)
+let p1Score = new PlayerScore(1, 0)
+let p2Score = new PlayerScore(2, 0)
 gameScoreTally.trackScore(p1Score);
 gameScoreTally.trackScore(p2Score);
 let currentTurn = 2;
@@ -59,7 +59,7 @@ function changePlayerTurn() {
 
 function rollDice() {
   event.preventDefault();
-  let diceRoll = Math.floor(Math.random() * 6) +1;
+  let diceRoll = Math.floor(Math.random() * 6) + 1;
   if (diceRoll === 1) {
     displayRolledNumber(diceRoll);
     return "nothing"
@@ -80,7 +80,7 @@ function holdDice() {
 }
 
 function checkWinningConditions() {
-  if (gameScoreTally.scores[currentTurn].currentScore >= 100 ) {
+  if (gameScoreTally.scores[currentTurn].currentScore >= 100) {
     let winMessageHolder = document.getElementById("winMessage");
     winMessageHolder.innerText = "Player " + currentTurn + " wins!";
     displayGameButtons(false);
@@ -105,7 +105,7 @@ function setAiMode() {
 
 function aiTurn() {
   if (aiMode === 1) {
-    let diceRollTotal = rollDice(currentTurn) 
+    let diceRollTotal = rollDice(currentTurn)
     if (diceRollTotal === "nothing") {
       turnTotal = 0;
       holdDice();
@@ -124,16 +124,16 @@ function aiTurn() {
   else {
     for (diceRollTotal = 0; diceRollTotal < 16; diceRollTotal) {
       currentRollTotal = rollDice(currentTurn);
-    if (currentRollTotal === "nothing") {
-      turnTotal = 0;
-      console.log("AI rolls: "+ currentRollTotal);
-      holdDice();
-      return;
-    } else {
-      diceRollTotal += currentRollTotal;
-      turnTotal = diceRollTotal;
-      console.log("AI rolls: "+ currentRollTotal);
-    }
+      if (currentRollTotal === "nothing") {
+        turnTotal = 0;
+        console.log("AI rolls: " + currentRollTotal);
+        holdDice();
+        return;
+      } else {
+        diceRollTotal += currentRollTotal;
+        turnTotal = diceRollTotal;
+        console.log("AI rolls: " + currentRollTotal);
+      }
     }
     holdDice();
   }
@@ -142,7 +142,7 @@ function aiTurn() {
 function playerTurn() {
   event.preventDefault();
   let diceRollTotal = rollDice(currentTurn);
-  console.log("Human rolls: "+ diceRollTotal);
+  console.log("Human rolls: " + diceRollTotal);
   if (diceRollTotal === "nothing") {
     turnTotal = 0;
     holdDice();
@@ -167,9 +167,15 @@ function displayRolledNumber(rolledNumber) {
   let rolledNumberDisplay = document.getElementById("rolledNumberDisplay");
   rolledNumberDisplay.removeAttribute("class");
   rolledNumberDisplay.innerText = "You rolled a " + rolledNumber + ".";
-  if (rolledNumber === 1) {
+  if (rolledNumber === 1 && aiMode === 0) {
     rolledNumberDisplay.setAttribute("class", "red");
-    rolledNumberDisplay.innerText = "You rolled a " + rolledNumber + ", meaning you score nothing and it's the next player's turn.";
+    rolledNumberDisplay.innerText = "Player " + currentTurn + " rolled a " + rolledNumber + ", meaning they score nothing and it's the next player's turn.";
+  } else if (rolledNumber === 1 && aiMode != 0 && currentTurn === 1) {
+    rolledNumberDisplay.setAttribute("class", "red");
+    rolledNumberDisplay.innerText = "You rolled a " + rolledNumber + ", meaning you score nothing and it's the AI player's turn.";
+  } else if (rolledNumber === 1 && aiMode != 0 && currentTurn === 2) {
+    rolledNumberDisplay.setAttribute("class", "red");
+    rolledNumberDisplay.innerText = "AI rolled a " + rolledNumber + ", meaning it scored nothing and it's your turn.";
   }
 }
 
@@ -200,7 +206,7 @@ function displayCurrentPlayerTurn() {
 
 function hideGameOptionsDiv() {
   let gameOptionsDiv = document.getElementById("divGameOptions");
-  gameOptionsDiv.setAttribute("class","hidden");
+  gameOptionsDiv.setAttribute("class", "hidden");
 }
 
 function showGame() {
@@ -219,10 +225,10 @@ function displayGameButtons(input) {
   }
 }
 
-window.addEventListener("load", function() {
-  this.document.getElementById("playGame").addEventListener("click",changePlayerTurn);
-  this.document.getElementById("playWithAi").addEventListener("click",setAiMode);
-  this.document.getElementById("playWithHardAi").addEventListener("click",setAiMode);
+window.addEventListener("load", function () {
+  this.document.getElementById("playGame").addEventListener("click", changePlayerTurn);
+  this.document.getElementById("playWithAi").addEventListener("click", setAiMode);
+  this.document.getElementById("playWithHardAi").addEventListener("click", setAiMode);
   this.document.getElementById("hold").addEventListener("click", holdDice);
   this.document.getElementById("rollDice").addEventListener("click", playerTurn);
 })
