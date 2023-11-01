@@ -29,6 +29,7 @@ gameScoreTally.trackScore(p2Score);
 let currentTurn = 2;
 let turnTotal = 0;
 let aiMode = 0;
+let tempAiTurnCounter = 0;
 
 
 // Global Business Logic
@@ -83,6 +84,7 @@ function checkWinningConditions() {
     let winMessageHolder = document.getElementById("winMessage");
     winMessageHolder.innerText = "Player " + currentTurn + " wins!";
     displayGameButtons(false);
+    displayScores()
   } else {
     changePlayerTurn();
   }
@@ -93,14 +95,12 @@ function checkWinningConditions() {
 function setAiMode() {
   event.preventDefault();
   mode = event.target.id
-  console.log(mode)
   if (mode === "playWithHardAi") {
     aiMode = 2;
   } else {
     aiMode = 1;
   }
   changePlayerTurn();
-  console.log(aiMode)
 }
 
 function aiTurn() {
@@ -122,26 +122,33 @@ function aiTurn() {
     }
   }
   else {
-    for (diceRollTotal = 0; diceRollTotal < 21; diceRollTotal)
-    currentRollTotal = rollDice(currentTurn);
+    for (diceRollTotal = 0; diceRollTotal < 16; diceRollTotal) {
+      currentRollTotal = rollDice(currentTurn);
     if (currentRollTotal === "nothing") {
       turnTotal = 0;
+      console.log("AI rolls: "+ currentRollTotal);
       holdDice();
-      break;
+      return;
+    } else {
+      diceRollTotal += currentRollTotal;
+      turnTotal = diceRollTotal;
+      console.log("AI rolls: "+ currentRollTotal);
     }
+    }
+    holdDice();
   }
 }
 
 function playerTurn() {
   event.preventDefault();
   let diceRollTotal = rollDice(currentTurn);
+  console.log("Human rolls: "+ diceRollTotal);
   if (diceRollTotal === "nothing") {
     turnTotal = 0;
     holdDice();
     return
   }
   turnTotal += diceRollTotal;
-  console.log(turnTotal);
   displayTurnTotal(turnTotal);
 }
 
