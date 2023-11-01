@@ -28,9 +28,20 @@ let p1Score = new PlayerScore(1,0)
 let p2Score = new PlayerScore(2,0)
 gameScoreTally.trackScore(p1Score);
 gameScoreTally.trackScore(p2Score);
+let currentTurn = 1;
 
 
 // Business Logic
+function changePlayerTurn() {
+  if (currentTurn === 1) {
+    currentTurn = 2;
+    playerTurn(2);
+  } else {
+    currentTurn = 1;
+    playerTurn(1);
+  }
+}
+
 function playerTurn(playerNumber) {
   let keepRolling = 1;
   let turnTotal = 0;
@@ -38,6 +49,7 @@ function playerTurn(playerNumber) {
     let diceRoll = Math.floor(Math.random() * 6) +1;    
     if (diceRoll === 1) {
       keepRolling = 0;
+      changePlayerTurn();
     } else if (diceRoll > 1) {
       
   
@@ -45,6 +57,8 @@ function playerTurn(playerNumber) {
       turnTotal = turnTotal + diceRoll
       //(event listener for hold)
       gameScoreTally.scores[playerNumber].addScore(turnTotal)
+      keepRolling = i-1;
+      changePlayerTurn();
     }
   gameScoreTally.scores[playerNumber].prototype.addScore(turnTotal)
   turnTotalP1 = 0
