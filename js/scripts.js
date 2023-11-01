@@ -53,8 +53,15 @@ function changePlayerTurn() {
 
 function setAiMode() {
   event.preventDefault();
-  aiMode = mode;
+  mode = event.target.id
+  console.log(mode)
+  if (mode === "playWithHardAi") {
+    aiMode = 2;
+  } else {
+    aiMode = 1;
+  }
   changePlayerTurn();
+  console.log(aiMode)
 }
 
 function playerTurn() {
@@ -163,8 +170,8 @@ function showGame() {
 
 window.addEventListener("load", function() {
   this.document.getElementById("playGame").addEventListener("click",changePlayerTurn);
-  this.document.getElementById("playWithAi").addEventListener("click",setAiMode());
-  this.document.getElementById("playWithHardAi").addEventListener("click",setAiMode());
+  this.document.getElementById("playWithAi").addEventListener("click",setAiMode);
+  this.document.getElementById("playWithHardAi").addEventListener("click",setAiMode);
   this.document.getElementById("hold").addEventListener("click", holdDice);
   this.document.getElementById("rollDice").addEventListener("click", playerTurn);
 })
