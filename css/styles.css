@@ -38,5 +38,16 @@
 }
 
 .green {
-  color:rgb(32, 128, 32);
+  color:rgb(73, 161, 73);
+}
+
+
+/* Animated Styles */
+
+#pigWalker {
+  display: block;
+  width: 50px;
+  margin-left: 40%;
+  margin-right: 40%;
+  position:sticky;
 }
