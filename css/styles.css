@@ -1,13 +1,13 @@
 /* Styles for Functional Items */
 
 .hidden {
-  display:none;
+  display: none;
 }
 
 
 /* Div Styles */
 #divTopBanner {
-  text-align:center;
+  text-align: center;
   margin: 1%;
   font-family: 'Champigna', sans-serif;
 }
@@ -18,11 +18,11 @@
 }
 
 #gameOptions {
-  text-align:center;
+  text-align: center;
 }
 
 #gameModeForm {
-  text-align:center;
+  text-align: center;
 }
 
 #divGame {
@@ -41,25 +41,22 @@
 .gray {
   background-color: gray;
 }
+
 .red {
-  color:rgb(116, 14, 14);
+  color: rgb(116, 14, 14);
 }
 
 .green {
-  color:rgb(73, 161, 73);
+  color: rgb(73, 161, 73);
 }
 
 
 /* Animated Styles */
 
-#pigHolder {
-  text-align:left;
-}
-
 #pigWalker {
-    height: 50px;  
-    position:sticky;
-    display:block;
+  height: 50px;
+  position: sticky;
+  display: block;
 }
 
 .flipImage {
