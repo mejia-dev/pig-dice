@@ -80,23 +80,61 @@ function holdDice() {
 
 function checkWinningConditions() {
   let winMessageHolder = document.getElementById("winMessage");
+  if (aiMode === 0) {
+    if (gameMode === 0) {
+      if (gameScoreTally.scores[currentTurn].currentScore >= 100) {
+        winMessageHolder.setAttribute("class", "green")
+        winMessageHolder.innerText = "Player " + currentTurn + " wins!";
+        displayGameButtons(false);
+        displayScores()
+      } else {
+        changePlayerTurn();
+      }
+    } else if (gameMode === 1) {
+      if (gameScoreTally.scores[currentTurn].currentScore >= 200) {
+        winMessageHolder.setAttribute("class", "green")
+        winMessageHolder.innerText = "Player " + currentTurn + " wins!";
+        displayGameButtons(false);
+        displayScores();
+      } else {
+        changePlayerTurn();
+    }
+  }
+} else {
   if (gameMode === 0) {
     if (gameScoreTally.scores[currentTurn].currentScore >= 100) {
-      winMessageHolder.innerText = "Player " + currentTurn + " wins!";
+      if (currentTurn === 1) {
+      winMessageHolder.setAttribute("class", "green")
+      winMessageHolder.innerText = "Player wins!";
       displayGameButtons(false);
       displayScores()
+      } else {
+        winMessageHolder.setAttribute("class", "red")
+        winMessageHolder.innerText = "AI wins!"
+        displayGameButtons(false);
+        displayScores()
+      }
     } else {
       changePlayerTurn();
     }
   } else if (gameMode === 1) {
     if (gameScoreTally.scores[currentTurn].currentScore >= 200) {
-      winMessageHolder.innerText = "Player " + currentTurn + " wins!";
+      if (currentTurn === 1) {
+      winMessageHolder.setAttribute("class", "green")
+      winMessageHolder.innerText = "Player wins!";
       displayGameButtons(false);
       displayScores();
+      } else {
+        winMessageHolder.setAttribute("class", "red")
+        winMessageHolder.innerText = "AI wins!"
+        displayGameButtons(false);
+        displayScores()
+      }
     } else {
       changePlayerTurn();
-    }
   }
+}
+}
 }
 
 function checkGameMode() {
@@ -365,10 +403,27 @@ function displayGameButtons(input) {
   }
 }
 
+function mouseLocation() {
+  let e = e || window.event;
+}
+
+function walkPig(event) {
+  const pigWalker = document.getElementById("pigWalker");
+  pigWalker.style.left = event.clientX + 'px';
+}
+
+function onMouseMove() {
+  event.preventDefault();
+  const pigWalker = document.getElementById("pigWalker");
+  pigWalker.style.left = event.clientX + 'px';
+}
+
+
 window.addEventListener("load", function () {
   this.document.getElementById("playGame").addEventListener("click", changePlayerTurn);
   this.document.getElementById("playWithAi").addEventListener("click", setAiMode);
   this.document.getElementById("playWithHardAi").addEventListener("click", setAiMode);
   this.document.getElementById("hold").addEventListener("click", holdDice);
   this.document.getElementById("rollDice").addEventListener("click", playerTurn);
+  this.document.addEventListener('mousemove', onMouseMove);
 })
