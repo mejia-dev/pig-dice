@@ -128,15 +128,19 @@ function aiTurn() {
     if (gameMode === 0) {
       let diceRollTotal = rollDice(currentTurn);
       if (diceRollTotal === "nothing") {
+        console.log("AI rolls: " + diceRollTotal);
         turnTotal = 0;
         holdDice();
       } else {
+        console.log("AI rolls: " + diceRollTotal);
         turnTotal += diceRollTotal;
         diceRollTotal = rollDice(currentTurn)
         if (diceRollTotal === "nothing") {
+          console.log("AI rolls: " + diceRollTotal);
           turnTotal = 0;
           holdDice();
         } else {
+          console.log("AI rolls: " + diceRollTotal);
           turnTotal += diceRollTotal;
           holdDice();
         }
@@ -216,7 +220,6 @@ function aiTurn() {
 function playerTurn() {
   event.preventDefault();
   let diceRollTotal = rollDice(currentTurn);
-  let diceRollTotalB = rollDice(currentTurn);
   if (gameMode === 0) {
     console.log("Human rolls: " + diceRollTotal);
     if (diceRollTotal === "nothing") {
@@ -227,6 +230,7 @@ function playerTurn() {
     turnTotal += diceRollTotal;
     displayTurnTotal(turnTotal);
 } else if (gameMode === 1) {
+  let diceRollTotalB = rollDice(currentTurn);
   console.log("Human rolls: " + diceRollTotal + " & " + diceRollTotalB)
   if (diceRollTotal === "nothing" && diceRollTotalB === "nothing") {
     resetScore();
