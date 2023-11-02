@@ -325,7 +325,7 @@ function hideRolledMessages() {
 function displayTurnTotal(turnTotal) {
   let turnTotalDisplay1 = document.getElementById("turnTotalDisplay1");
   let turnTotalDisplay2 = document.getElementById("turnTotalDisplay2");
-  turnTotalDisplay1.innerHTML = "Your current total for this turn is " + turnTotal + "." + "Would you like to Roll Dice again, or Hold your current score?";
+  turnTotalDisplay1.innerHTML = "Your current total for this turn is " + turnTotal + ". Would you like to Roll Dice again, or Hold your current score?";
   turnTotalDisplay2.innerHTML = "Adding this total to your current score would bring you to " + (parseInt(turnTotal) + parseInt(gameScoreTally.scores[currentTurn].currentScore)) + ".";
 }
 
