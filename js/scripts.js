@@ -29,12 +29,15 @@ gameScoreTally.trackScore(p2Score);
 let currentTurn = 2;
 let turnTotal = 0;
 let aiMode = 0;
-let tempAiTurnCounter = 0;
+let gameMode = 0;
+// 0 is normal
+// 1 is two-dice
 
 
 // Global Business Logic
 function changePlayerTurn() {
   event.preventDefault();
+  checkGameMode()
   showGame()
   hideGameOptionsDiv()
   displayScores()
@@ -54,8 +57,6 @@ function changePlayerTurn() {
     return;
   }
 }
-
-
 
 function rollDice() {
   event.preventDefault();
@@ -87,6 +88,15 @@ function checkWinningConditions() {
     displayScores()
   } else {
     changePlayerTurn();
+  }
+}
+
+function checkGameMode() {
+  const gameModeSelected = document.querySelector("input[name='gameMode']:checked").value;
+  if (gameModeSelected === "normal") {
+    gameMode = 0;
+  } else if (gameModeSelected === "two-dice") {
+    gameMode = 1;
   }
 }
 
@@ -142,14 +152,26 @@ function aiTurn() {
 function playerTurn() {
   event.preventDefault();
   let diceRollTotal = rollDice(currentTurn);
-  console.log("Human rolls: " + diceRollTotal);
-  if (diceRollTotal === "nothing") {
-    turnTotal = 0;
-    holdDice();
-    return
+  let diceRollTotalB = rollDice(currentTurn);
+  if (gameMode === 0) {
+    console.log("Human rolls: " + diceRollTotal);
+    if (diceRollTotal === "nothing") {
+      turnTotal = 0;
+      holdDice();
+      return
+    }
+    turnTotal += diceRollTotal;
+    displayTurnTotal(turnTotal);
+} else if (gameMode === 1) {
+  console.log("Human rolls: " + diceRollTotal + " & " + diceRollTotalB)
+  if (diceRollTotal === "nothing" && diceRollTotalB === "nothing") {
+    resetScore();
   }
-  turnTotal += diceRollTotal;
-  displayTurnTotal(turnTotal);
+}
+}
+
+function resetScore() {
+  gameScoreTally.scores[currentTurn].currentScore = 0;
 }
 
 // UI Logic
