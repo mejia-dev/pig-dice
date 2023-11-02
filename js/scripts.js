@@ -81,14 +81,24 @@ function holdDice() {
 }
 
 function checkWinningConditions() {
+  let winMessageHolder = document.getElementById("winMessage");
+  if (gameMode === 0) {
   if (gameScoreTally.scores[currentTurn].currentScore >= 100) {
-    let winMessageHolder = document.getElementById("winMessage");
     winMessageHolder.innerText = "Player " + currentTurn + " wins!";
     displayGameButtons(false);
     displayScores()
   } else {
     changePlayerTurn();
   }
+} else if (gameMode === 1) {
+  if (gameScoreTally.scores[currentTurn].currentScore >= 200) {
+    winMessageHolder.innerText = "Player " + currentTurn + " wins!";
+    displayGameButtons(false);
+    displayScores();
+  } else {
+    changePlayerTurn();
+  }
+}
 }
 
 function checkGameMode() {
