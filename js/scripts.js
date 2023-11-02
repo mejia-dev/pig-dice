@@ -62,10 +62,8 @@ function rollDice() {
   event.preventDefault();
   let diceRoll = Math.floor(Math.random() * 6) + 1;
   if (diceRoll === 1) {
-    displayRolledNumber(diceRoll);
     return "nothing"
   } else if (diceRoll > 1) {
-    displayRolledNumber(diceRoll);
     return diceRoll;
   }
 }
@@ -127,6 +125,7 @@ function aiTurn() {
   if (aiMode === 1) {
     if (gameMode === 0) {
       let diceRollTotal = rollDice(currentTurn);
+      displayRolledNumber(diceRollTotal,0);
       if (diceRollTotal === "nothing") {
         console.log("AI rolls: " + diceRollTotal);
         turnTotal = 0;
@@ -135,6 +134,7 @@ function aiTurn() {
         console.log("AI rolls: " + diceRollTotal);
         turnTotal += diceRollTotal;
         diceRollTotal = rollDice(currentTurn)
+        displayRolledNumber(diceRollTotal,0);
         if (diceRollTotal === "nothing") {
           console.log("AI rolls: " + diceRollTotal);
           turnTotal = 0;
@@ -180,8 +180,10 @@ function aiTurn() {
   else {
     if (gameMode === 0) {
       let diceRollTotal = rollDice(currentTurn);
+      displayRolledNumber(diceRollTotal,0);
       for (diceRollTotal = 0; diceRollTotal < 16; diceRollTotal) {
         let currentRollTotal = rollDice(currentTurn);
+        displayRolledNumber(currentRollTotal,0);
         if (currentRollTotal === "nothing") {
           turnTotal = 0;
           console.log("AI rolls: " + currentRollTotal);
@@ -221,6 +223,7 @@ function playerTurn() {
   event.preventDefault();
   let diceRollTotal = rollDice(currentTurn);
   if (gameMode === 0) {
+    displayRolledNumber(diceRollTotal,0);
     console.log("Human rolls: " + diceRollTotal);
     if (diceRollTotal === "nothing") {
       turnTotal = 0;
@@ -261,19 +264,23 @@ function displayScores() {
   p2ScoreDisplay.innerText = p2Score;
 }
 
-function displayRolledNumber(rolledNumber) {
+function displayRolledNumber(rolledNumberA,rolledNumberB) {
   let rolledNumberDisplay = document.getElementById("rolledNumberDisplay");
   rolledNumberDisplay.removeAttribute("class");
-  rolledNumberDisplay.innerText = "You rolled a " + rolledNumber + ".";
-  if (rolledNumber === 1 && aiMode === 0) {
-    rolledNumberDisplay.setAttribute("class", "red");
-    rolledNumberDisplay.innerText = "Player " + currentTurn + " rolled a " + rolledNumber + ", meaning they score nothing and it's the next player's turn.";
-  } else if (rolledNumber === 1 && aiMode != 0 && currentTurn === 1) {
-    rolledNumberDisplay.setAttribute("class", "red");
-    rolledNumberDisplay.innerText = "You rolled a " + rolledNumber + ", meaning you score nothing and it's the AI player's turn.";
-  } else if (rolledNumber === 1 && aiMode != 0 && currentTurn === 2) {
-    rolledNumberDisplay.setAttribute("class", "red");
-    rolledNumberDisplay.innerText = "AI rolled a " + rolledNumber + ", meaning it scored nothing and it's your turn.";
+  rolledNumberDisplay.innerText = "You rolled a " + rolledNumberA + ".";
+  if (gameMode === 0) {
+    if (rolledNumberA === "nothing" && aiMode === 0) {
+      rolledNumberDisplay.setAttribute("class", "red");
+      rolledNumberDisplay.innerText = "Player " + currentTurn + " rolled a 1, meaning they score nothing and it's the next player's turn.";
+    } else if (rolledNumberA === "nothing" && aiMode != 0 && currentTurn === 1) {
+      rolledNumberDisplay.setAttribute("class", "red");
+      rolledNumberDisplay.innerText = "You rolled a 1, meaning you score nothing and it's the AI player's turn.";
+    } else if (rolledNumberA === "nothing" && aiMode != 0 && currentTurn === 2) {
+      rolledNumberDisplay.setAttribute("class", "red");
+      rolledNumberDisplay.innerText = "AI rolled a 1, meaning it scored nothing and it's your turn.";
+    }
+  } else if (gameMode === 1) {
+
   }
 }
 
