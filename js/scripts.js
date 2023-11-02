@@ -345,6 +345,8 @@ function displayCurrentPlayerTurn() {
 function hideGameOptionsDiv() {
   let gameOptionsDiv = document.getElementById("divGameOptions");
   gameOptionsDiv.setAttribute("class", "hidden");
+  let subTitle = document.getElementById("subTitle");
+  subTitle.setAttribute("class", "hidden");
 }
 
 function showGame() {
