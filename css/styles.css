@@ -1,10 +1,4 @@
 /* Styles for Functional Items */
-.gray {
-  background-color: gray;
-}
-.red {
-  color:rgb(116, 14, 14);
-}
 
 .hidden {
   display:none;
@@ -31,4 +25,18 @@
 #divScores {
   text-align: center;
   margin: 1%;
+}
+
+
+/* Color Styles */
+
+.gray {
+  background-color: gray;
+}
+.red {
+  color:rgb(116, 14, 14);
+}
+
+.green {
+  color:rgb(32, 128, 32);
 }
