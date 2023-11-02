@@ -1,3 +1,4 @@
+/* Styles for Functional Items */
 .gray {
   background-color: gray;
 }
@@ -7,4 +8,17 @@
 
 .hidden {
   display:none;
+}
+
+
+/* Div Styles */
+#divTopBanner {
+  text-align: center;
+  margin: 1%;
+  font-family: 'Champigna', sans-serif;
+}
+
+#divGameOptions {
+  text-align: center;
+  margin: 1%;
 }
