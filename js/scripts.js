@@ -81,22 +81,22 @@ function holdDice() {
 function checkWinningConditions() {
   let winMessageHolder = document.getElementById("winMessage");
   if (gameMode === 0) {
-  if (gameScoreTally.scores[currentTurn].currentScore >= 100) {
-    winMessageHolder.innerText = "Player " + currentTurn + " wins!";
-    displayGameButtons(false);
-    displayScores()
-  } else {
-    changePlayerTurn();
+    if (gameScoreTally.scores[currentTurn].currentScore >= 100) {
+      winMessageHolder.innerText = "Player " + currentTurn + " wins!";
+      displayGameButtons(false);
+      displayScores()
+    } else {
+      changePlayerTurn();
+    }
+  } else if (gameMode === 1) {
+    if (gameScoreTally.scores[currentTurn].currentScore >= 200) {
+      winMessageHolder.innerText = "Player " + currentTurn + " wins!";
+      displayGameButtons(false);
+      displayScores();
+    } else {
+      changePlayerTurn();
+    }
   }
-} else if (gameMode === 1) {
-  if (gameScoreTally.scores[currentTurn].currentScore >= 200) {
-    winMessageHolder.innerText = "Player " + currentTurn + " wins!";
-    displayGameButtons(false);
-    displayScores();
-  } else {
-    changePlayerTurn();
-  }
-}
 }
 
 function checkGameMode() {
@@ -125,7 +125,7 @@ function aiTurn() {
   if (aiMode === 1) {
     if (gameMode === 0) {
       let diceRollTotal = rollDice(currentTurn);
-      displayRolledNumber(diceRollTotal,0);
+      displayRolledNumber(diceRollTotal, 0);
       if (diceRollTotal === "nothing") {
         console.log("AI rolls: " + diceRollTotal);
         turnTotal = 0;
@@ -134,7 +134,7 @@ function aiTurn() {
         console.log("AI rolls: " + diceRollTotal);
         turnTotal += diceRollTotal;
         diceRollTotal = rollDice(currentTurn)
-        displayRolledNumber(diceRollTotal,0);
+        displayRolledNumber(diceRollTotal, 0);
         if (diceRollTotal === "nothing") {
           console.log("AI rolls: " + diceRollTotal);
           turnTotal = 0;
@@ -148,6 +148,7 @@ function aiTurn() {
     } else if (gameMode === 1) {
       let diceRollTotal = rollDice(currentTurn);
       let diceRollTotalB = rollDice(currentTurn);
+      displayRolledNumber(diceRollTotal, diceRollTotalB);
       if (diceRollTotal === "nothing" && diceRollTotalB === "nothing") {
         console.log("AI rolls: " + diceRollTotal + " & " + diceRollTotalB);
         resetScore();
@@ -161,6 +162,7 @@ function aiTurn() {
         turnTotal += diceRollTotal + diceRollTotalB;
         diceRollTotal = rollDice(currentTurn);
         diceRollTotalB = rollDice(currentTurn);
+        displayRolledNumber(diceRollTotal, diceRollTotalB);
         if (diceRollTotal === "nothing" && diceRollTotalB === "nothing") {
           console.log("AI rolls: " + diceRollTotal + " & " + diceRollTotalB);
           resetScore();
@@ -180,10 +182,10 @@ function aiTurn() {
   else {
     if (gameMode === 0) {
       let diceRollTotal = rollDice(currentTurn);
-      displayRolledNumber(diceRollTotal,0);
+      displayRolledNumber(diceRollTotal, 0);
       for (diceRollTotal = 0; diceRollTotal < 16; diceRollTotal) {
         let currentRollTotal = rollDice(currentTurn);
-        displayRolledNumber(currentRollTotal,0);
+        displayRolledNumber(currentRollTotal, 0);
         if (currentRollTotal === "nothing") {
           turnTotal = 0;
           console.log("AI rolls: " + currentRollTotal);
@@ -197,9 +199,10 @@ function aiTurn() {
       }
       holdDice();
     } else if (gameMode === 1) {
-      for (combinedDiceTotal = 0; combinedDiceTotal < 32; combinedDiceTotal) {
+      for (combinedDiceTotal = 0; combinedDiceTotal < 23; combinedDiceTotal) {
         let currentRollTotalA = rollDice(currentTurn);
         let currentRollTotalB = rollDice(currentTurn);
+        displayRolledNumber(currentRollTotalA, currentRollTotalB);
         if (currentRollTotalA === "nothing" && currentRollTotalB === "nothing") {
           console.log("AI rolls: " + currentRollTotalA + "&" + currentRollTotalB);
           resetScore();
@@ -215,6 +218,7 @@ function aiTurn() {
           console.log("AI rolls: " + currentRollTotalA + " & " + currentRollTotalB)
         }
       }
+      holdDice();
     }
   }
 }
@@ -223,7 +227,7 @@ function playerTurn() {
   event.preventDefault();
   let diceRollTotal = rollDice(currentTurn);
   if (gameMode === 0) {
-    displayRolledNumber(diceRollTotal,0);
+    displayRolledNumber(diceRollTotal, 0);
     console.log("Human rolls: " + diceRollTotal);
     if (diceRollTotal === "nothing") {
       turnTotal = 0;
@@ -232,20 +236,21 @@ function playerTurn() {
     }
     turnTotal += diceRollTotal;
     displayTurnTotal(turnTotal);
-} else if (gameMode === 1) {
-  let diceRollTotalB = rollDice(currentTurn);
-  console.log("Human rolls: " + diceRollTotal + " & " + diceRollTotalB)
-  if (diceRollTotal === "nothing" && diceRollTotalB === "nothing") {
-    resetScore();
-  } else if (diceRollTotal === "nothing" || diceRollTotalB === "nothing") {
-    turnTotal = 0;
-    holdDice();
-    return
-  } else {
-    turnTotal += diceRollTotal + diceRollTotalB;
-    displayTurnTotal(turnTotal);    
+  } else if (gameMode === 1) {
+    let diceRollTotalB = rollDice(currentTurn);
+    displayRolledNumber(diceRollTotal, diceRollTotalB);
+    console.log("Human rolls: " + diceRollTotal + " & " + diceRollTotalB)
+    if (diceRollTotal === "nothing" && diceRollTotalB === "nothing") {
+      resetScore();
+    } else if (diceRollTotal === "nothing" || diceRollTotalB === "nothing") {
+      turnTotal = 0;
+      holdDice();
+      return
+    } else {
+      turnTotal += diceRollTotal + diceRollTotalB;
+      displayTurnTotal(turnTotal);
+    }
   }
-}
 }
 
 function resetScore() {
@@ -264,11 +269,11 @@ function displayScores() {
   p2ScoreDisplay.innerText = p2Score;
 }
 
-function displayRolledNumber(rolledNumberA,rolledNumberB) {
+function displayRolledNumber(rolledNumberA, rolledNumberB) {
   let rolledNumberDisplay = document.getElementById("rolledNumberDisplay");
   rolledNumberDisplay.removeAttribute("class");
-  rolledNumberDisplay.innerText = "You rolled a " + rolledNumberA + ".";
   if (gameMode === 0) {
+    rolledNumberDisplay.innerText = "You rolled a " + rolledNumberA + ".";
     if (rolledNumberA === "nothing" && aiMode === 0) {
       rolledNumberDisplay.setAttribute("class", "red");
       rolledNumberDisplay.innerText = "Player " + currentTurn + " rolled a 1, meaning they score nothing and it's the next player's turn.";
@@ -280,7 +285,35 @@ function displayRolledNumber(rolledNumberA,rolledNumberB) {
       rolledNumberDisplay.innerText = "AI rolled a 1, meaning it scored nothing and it's your turn.";
     }
   } else if (gameMode === 1) {
+    rolledNumberDisplay.innerText = "You rolled a " + rolledNumberA + " with the first die and a " + rolledNumberB + " with the second.";
 
+    // Player-only two dice messages
+    if ((rolledNumberA === "nothing" && rolledNumberB === "nothing") && aiMode === 0) {
+      rolledNumberDisplay.setAttribute("class", "red");
+      rolledNumberDisplay.innerText = "Player " + currentTurn + " rolled a 1 with both dice, meaning their score was reset to 0 and it's the next player's turn.";
+    } else if ((rolledNumberA === "nothing" || rolledNumberB === "nothing") && aiMode === 0) {
+      rolledNumberDisplay.setAttribute("class", "red");
+      rolledNumberDisplay.innerText = "Player " + currentTurn + " rolled a 1 with one of their dice, meaning they score nothing and it's the next player's turn.";
+    }
+
+    // AI two dice messages
+    //// Player 1 (human) messages
+    else if ((rolledNumberA === "nothing" && rolledNumberB === "nothing") && aiMode != 0 && currentTurn === 1) {
+      rolledNumberDisplay.setAttribute("class", "red");
+      rolledNumberDisplay.innerText = "You rolled a 1 with both dice, meaning your score was reset to 0 and it's the AI player's turn.";
+    } else if ((rolledNumberA === "nothing" || rolledNumberB === "nothing") && aiMode != 0 && currentTurn === 1) {
+      rolledNumberDisplay.setAttribute("class", "red");
+      rolledNumberDisplay.innerText = "You rolled a 1 with one of your dice, meaning you score nothing and it's the AI player's turn.";
+    }
+
+    //// Player 2 (AI) messages
+    else if ((rolledNumberA === "nothing" && rolledNumberB === "nothing") && aiMode != 0 && currentTurn === 2) {
+      rolledNumberDisplay.setAttribute("class", "red");
+      rolledNumberDisplay.innerText = "AI rolled a 1 with both dice, meaning their score was reset to 0 and it's your turn.";
+    } else if ((rolledNumberA === "nothing" || rolledNumberB === "nothing") && aiMode != 0 && currentTurn === 2) {
+      rolledNumberDisplay.setAttribute("class", "red");
+      rolledNumberDisplay.innerText = "AI rolled a 1 with one of their dice, meaning they score nothing and it's your turn.";
+    }
   }
 }
 
